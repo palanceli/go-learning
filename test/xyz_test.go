@@ -1,7 +1,10 @@
 package test
 
-import "testing"
+import (
+	"testing"
+)
 
+// 功能测试用例
 func TestXYZAdd(t *testing.T) {
 	result := XYZAdd(1, 2)
 	if result != 3 {
