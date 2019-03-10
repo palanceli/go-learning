@@ -7,6 +7,11 @@ import (
 	"github.com/golang/glog"
 )
 
+/*
+参考资料
+https://godoc.org/github.com/golang/glog#Infoln
+*/
+
 func TestBasicUsage(t *testing.T) {
 	defer glog.Flush() // 退出之前Flush残余log数据
 
