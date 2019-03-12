@@ -1,18 +1,11 @@
 mode: server  # [server, rebuild, patch, transfer]
 
-house:
-  family:
-    name: Doe
-    parents:
-      - John
-      - Jane
-    children:
-      - Paul
-      - Mark
-      - Simone
-  address:
-    number: 34
-    street: Main Street
-    city: Nowheretown
-    zipcode: 12345
-  has_pet: false
+name: John
+age: 18
+sex: male
+
+score:
+  - class_name: math
+    class_score: 80
+  - class_name: english
+    class_score: 90
