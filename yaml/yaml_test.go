@@ -6,6 +6,7 @@ import (
 	"flag"
 	"io/ioutil"
 	"os"
+	"sync/atomic"
 	"testing"
 
 	"github.com/golang/glog"
@@ -49,4 +50,33 @@ func TestMarshal(t *testing.T) {
 	}
 
 	glog.Infof("config = %v ", student)
+}
+
+func loadConfig(confPath string, config interface{}, defaultConfig interface{}) interface{} {
+	var globalConf atomic.Value
+	if defaultConfig != nil {
+		globalConf.Store(defaultConfig)
+	}
+	data, err := ioutil.ReadFile(confPath)
+	if err != nil {
+		glog.Fatalf("FAILED to read config file %s. err=%v", confPath, err)
+	}
+	err = yaml.Unmarshal(data, config)
+	if err != nil {
+		glog.Fatalf("FAILED to parse config file %s. err=%v", confPath, err)
+	}
+	globalConf.Store(config)
+	return globalConf.Load()
+}
+
+func TestLoadConf(t *testing.T) {
+	var defaultConf = Student{
+		Name: "Unknown",
+		Age:  18,
+	}
+	var config = Student{}
+	confPath := "./test.yml"
+	conf := loadConfig(confPath, &config, &defaultConf).(*Student)
+	glog.Infof("conf: %v", conf)
+	glog.Infof("Name: %s", conf.Name)
 }
