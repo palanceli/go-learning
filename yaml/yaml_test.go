@@ -80,3 +80,18 @@ func TestLoadConf(t *testing.T) {
 	glog.Infof("conf: %v", conf)
 	glog.Infof("Name: %s", conf.Name)
 }
+
+type Config struct {
+	Host     string `yaml:"host"`
+	User     string `yaml:"user"`
+	Password string `yaml:"password"`
+}
+
+func TestConfig(t *testing.T) {
+	flag.Set("c", "conf.yml")
+	flag.Parse()
+
+	Initialize(&Config{})
+	config := Get().(*Config)
+	glog.Infof("Host:%s, User:%s, Password:%s", config.Host, config.User, config.Password)
+}
